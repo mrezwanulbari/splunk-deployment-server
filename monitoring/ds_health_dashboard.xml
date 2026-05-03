@@ -1,0 +1,106 @@
+<dashboard version="1.1" theme="dark">
+  <label>Deployment Server Health Dashboard</label>
+  <description>Comprehensive monitoring for Splunk Deployment Server operations</description>
+
+  <row>
+    <panel>
+      <title>Total Connected Clients</title>
+      <single>
+        <search>
+          <query>
+            | rest /services/deployment/server/clients
+            | stats count as total_clients
+          </query>
+          <earliest>-1h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0xdc4e41","0xf1813f","0x53a051"]</option>
+        <option name="rangeValues">[100,500]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Clients by OS Type</title>
+      <chart>
+        <search>
+          <query>
+            | rest /services/deployment/server/clients
+            | stats count by machineType
+            | sort -count
+          </query>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Stale Clients (No Check-in > 24h)</title>
+      <single>
+        <search>
+          <query>
+            | rest /services/deployment/server/clients
+            | eval last_checkin=strptime(lastPhoneHomeTime, "%a %b %d %H:%M:%S %Y")
+            | where last_checkin < relative_time(now(), "-24h")
+            | stats count as stale_clients
+          </query>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="rangeColors">["0x53a051","0xf1813f","0xdc4e41"]</option>
+        <option name="rangeValues">[5,20]</option>
+        <option name="useColors">1</option>
+      </single>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Client Phone Home Activity (Last 24 Hours)</title>
+      <chart>
+        <search>
+          <query>
+            index=_internal source=*metrics.log group=tcpin_connections
+            | timechart span=1h dc(hostname) as connected_clients
+          </query>
+          <earliest>-24h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Deployment App Status</title>
+      <table>
+        <search>
+          <query>
+            | rest /services/deployment/server/applications
+            | table title, serverclasses, clientCount, lastUpdated
+            | rename title as "App Name", serverclasses as "Server Classes",
+              clientCount as "Client Count", lastUpdated as "Last Updated"
+            | sort -"Client Count"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Server Class Membership</title>
+      <table>
+        <search>
+          <query>
+            | rest /services/deployment/server/serverclasses
+            | table title, filterType, clientCount
+            | rename title as "Server Class", filterType as "Filter Type",
+              clientCount as "Client Count"
+            | sort -"Client Count"
+          </query>
+        </search>
+      </table>
+    </panel>
+  </row>
+</dashboard>
