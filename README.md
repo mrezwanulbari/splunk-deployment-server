@@ -1,3 +1,7 @@
+## 📊 GitHub Stats
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=mrezwanulbari&show_icons=true&theme=tokyonight)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=mrezwanulbari&layout=compact&theme=tokyonight)
+
 # Enterprise Splunk Deployment Automation
 This project automates the deployment and configuration of Splunk across multiple nodes in a large-scale enterprise environment. By leveraging industry best practices and Splunk's deployment features, it streamlines the installation, configuration, and management of Splunk deployments.
   
