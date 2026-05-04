@@ -1,4 +1,4 @@
-# Splunk Deployment Server — Enterprise Architecture & Best Practices
+# Enterprise Splunk Deployment Automation - Automated Splunk deployment using best practices
 
 ![Splunk](https://img.shields.io/badge/Splunk-000000?style=for-the-badge&logo=splunk&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
