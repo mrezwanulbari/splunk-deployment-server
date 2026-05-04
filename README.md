@@ -252,6 +252,14 @@ python3 scripts/client_status.py --output report.csv
 
 ---
 
+## Installation:
+```bash
+git clone https://github.com/mrezwanulbari/Enterprise-Splunk-Deployment-Automation.git
+cd Enterprise-Splunk-Deployment-Automation
+./deploy.sh
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please read our contributing guidelines and submit pull requests for any improvements.
