@@ -257,6 +257,7 @@ python3 scripts/client_status.py --output report.csv
 git clone https://github.com/mrezwanulbari/Enterprise-Splunk-Deployment-Automation.git
 cd Enterprise-Splunk-Deployment-Automation
 ./deploy.sh
+```
 
 ---
 
